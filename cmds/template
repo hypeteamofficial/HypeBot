@@ -1,0 +1,12 @@
+var bowner = '531186390717825074';
+const mpmsg = `!!ERROR!!\nYou dont have the required perms!`
+module.exports = {
+  catagory: 'bot|fun|util|mod|owner',
+  name: 'NAME',
+  desc: 'description',
+  aliases: ['aliases'],
+  execute: async (message, args, client, db, packageInfo, Discord, member) => {
+    if (!message.member.hasPermission('PERMS')) return message.reply(mpmsg);
+    
+ if (message.deletable) return message.delete();
+}};
