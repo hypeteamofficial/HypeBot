@@ -1,8 +1,10 @@
 const customisation = require('../customisation.json');
+var ids = '531186390717825074';
+const reactor = require("d-reactor");
 module.exports = {
   catagory: 'bot',
   name: 'suggest',
-  description: 'Suggests something.',
+  desc: 'Suggests something to **HYPE DEVELOPMENT**!',
   usage: 'suggest <suggestion>',
   execute: async (message, args, client, db, packageInfo, Discord) => {
    if (!args[0]) return message.reply('You need to imput a Suggestion BOI');;
@@ -14,7 +16,7 @@ module.exports = {
     .setDescription(args)                
     .setColor(16295218)
     .addField("FROM:", message.guild.name);
-
+    const votes = 0
     message.reply("Thanks for suggesting that! <:CHECK:746502146056388609>");
     const content = new Discord.MessageEmbed()
     .setAuthor(message.author.username, message.author.avatarURL())
@@ -24,12 +26,20 @@ module.exports = {
     .addField("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬", `INFO`)
     .addField("SERVER:", message.guild.name)
     .addField("MEMBER ID:", message.author.id)
-    .addField("SERVER ID:", message.guild.id);
-    client.channels.cache.get(customisation.suggestionlogchannelid).send(content);
-    client.channels.cache.get(customisation.suggestionchannelid).send(embed)
- .then(async function (message) {
-      await message.react(`746769836025315429`)
-      await message.react(`746769836180373504`)
-      });
-  }
-};
+    .addField("SERVER ID:", message.guild.id)
+    
+    const suggestionlog = await client.channels.cache.get(customisation.suggestionlogchannelid).send(content);
+    const suggestion = await client.channels.cache.get(customisation.suggestionchannelid).send(embed)
+    reactor.buttons(
+         suggestion,
+         {
+            emoji: "❌",
+            async clicked(u, r) {
+              if (!ids.includes(message.author.id)) return
+               await suggestion.delete();
+               await suggestionlog.delete();
+               r.cancel();
+            }
+         }, 
+    );
+}};

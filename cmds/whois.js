@@ -7,8 +7,8 @@ const Presence = {
     "offline": "<:OFFLINE:746539276765757481> | Offline"
 }
 const bot = {
-    "true": "<:BOT:746540840087978044>",
-    "false": "<:MEMBERS:746505245240066080>",
+    "true": "<:BOT:746540840087978044> | BOT",
+    "false": "<:MEMBERS:746505245240066080> | User",
 }
 module.exports = {
   catagory: 'util',

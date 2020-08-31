@@ -1,18 +1,12 @@
-// Delete The Trigger
-if (message.deletable) return message.delete();
-
-// Owner only command
 var bowner = '531186390717825074';
-const mpmsg = `!!ERROR!!\nYou are not my owner!`
+const mpmsg = `!!ERROR!!\nYou dont have the required perms!`
 module.exports = {
-  catagory: 'owner',
+  catagory: 'bot|fun|util|mod|owner',
   name: 'NAME',
   desc: 'description',
   aliases: ['aliases'],
   execute: async (message, args, client, db, packageInfo, Discord, member) => {
-    if (!bowner.includes(message.author.id)) return message.reply(mpmsg);
-
+    db.get("SELECT * FROM promo_codes where code=?", args[0], errorHandler)
+    db.set(`premium_${message.author.id}`, `TRUE`)
  if (message.deletable) return message.delete();
 }};
-
-// 

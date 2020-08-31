@@ -3,7 +3,7 @@ const mpmsg = `!!ERROR!!\nYou dont have the required perms!`
 module.exports = {
   catagory: 'bot',
   name: 'setup',
-  desc: 'Setup the server!\n >>> ``setup <announcement | Welcome> <#Channel>``',
+  desc: 'Setup the server!\n``setup <announcement | Welcome> <#Channel>``',
   aliases: ['aliases'],
   execute: async (message, args, client, db, packageInfo, Discord, member, mpembed) => {
   if (!message.member.hasPermission('MANAGE_GUILD') && !ids.includes(message.author.id)) return message.reply(mpmsg);

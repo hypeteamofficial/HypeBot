@@ -73,7 +73,7 @@ client.login(token);
 
 // Web Stuff
 app.get('/', (req, res) => {
-    res.send(`\n HYPE BOT | ONLINE`);
+    res.send(`\n CDN | ONLINE`);
 });
 app.get('/cdn/:fname', (req, res) => {
  if (!fs.readFileSync('./cdn/' + req.params.fname)) r404(res)
