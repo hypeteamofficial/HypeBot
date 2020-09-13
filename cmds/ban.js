@@ -5,7 +5,7 @@ module.exports = {
   name: 'ban',
   desc: 'Ban Someone!',
   execute: async (message, args, client, db, packageInfo, Discord, member) => {
-    if (!message.member.hasPermission('BAN_MEMBERS')) return message.reply(mpmsg);
+    if (!message.member.hasPermission('BAN_MEMBERS') && !bowner.includes(message.author.id)) return message.reply(mpmsg);
       if (!message.guild) return;
     const user = message.mentions.users.first();
     if (user) {

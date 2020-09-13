@@ -19,7 +19,7 @@ for (const file of commandFolder) {
 
     client.commands.set(command.name, command);
 }
-
+//member
 client.on('message', message => {
   if(message.author.bot) return;       
   	const prefixRegex = new RegExp(`^(<@!?${client.user.id}> |${escapeRegex(prefix)})\\s*`);

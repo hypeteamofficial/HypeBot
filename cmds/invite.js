@@ -9,8 +9,10 @@ module.exports = {
   const embed = new Discord.MessageEmbed()
     .setAuthor(client.user.username, client.user.avatarURL)
     .setColor(16295218)
-    .setTitle("INVITE ME!", '')
-    .setDescription(`[Invite The Bot!](${links.botinv})\n[Join Support!](${links.supportinv})`);
+    .setTitle("HYPE BOT", '')
+    .setDescription(`HYPE BOT Is a Multipurpose bot for every server!`)
+    .addField("INFO", "  PREFIX    | `//` OR `@BOT`\nHELP       | `//help` OR `@BOT help`\nOWNER | `Brandgrand!real#3131`", true)
+    .addField("Links", `[Invite The Bot!](${links.botinv})\n[Join Support!](${links.supportinv})\n[Website!](https://bot.hypedev.ga/)\n[dsc.gg](https://dsc.gg/hypebot)`, true);
   message.channel.send(embed)
 if (message.deletable) return message.delete();
 }};

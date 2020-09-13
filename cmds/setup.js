@@ -4,9 +4,8 @@ module.exports = {
   catagory: 'bot',
   name: 'setup',
   desc: 'Setup the server!\n``setup <announcement | Welcome> <#Channel>``',
-  aliases: ['aliases'],
   execute: async (message, args, client, db, packageInfo, Discord, member, mpembed) => {
-  if (!message.member.hasPermission('MANAGE_GUILD') && !ids.includes(message.author.id)) return message.reply(mpmsg);
+  if (!message.member.hasPermission('MANAGE_GUILD') && !bowner.includes(message.author.id)) return message.reply(mpmsg);
   if (args[0] === `welcome`) {
     const channel = message.mentions.channels.first() //mentioned channel
     

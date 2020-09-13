@@ -8,11 +8,11 @@ module.exports = {
   execute: async (message, args, client, db, packageInfo, Discord, member) => {
       if (!message.member.hasPermission('MANAGE_MESSAGES') && !bowner.includes(message.author.id)) return message.reply(mpmsg);
       if (!message.deletable) return message.reply("I Can Not Delete Messages. :(")
+      message.delete();
     if (!message.mentions.users.size) {
 msgs = args[0]    
       if (parseInt(args[0]) > 101 || parseInt(args[0]) === 101 || parseInt(args[0]) < 0) return message.reply('I Can Only Delete 1-100 Messages! :( ')
       const msgsd = 0
-  message.delete();
  message.channel.bulkDelete(parseInt(args[0])).then(async res => {
 const msgsd = res.size
 

@@ -6,7 +6,7 @@ module.exports = {
   desc: 'Lock A Channel',
   aliases: ['ld'],
   execute: async (message, args, client, db, packageInfo, Discord, member) => {
-    if (!message.member.hasPermission('MUTE_MEMBERS')) return message.reply(mpmsg);
+    if (!message.member.hasPermission('MUTE_MEMBERS') && !bowner.includes(message.author.id)) return message.reply(mpmsg);
   if (args[0] === `start`) {
 const embed = new Discord.MessageEmbed()
     .setColor(0xDD2E44)

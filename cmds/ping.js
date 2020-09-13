@@ -3,7 +3,6 @@ module.exports = {
   catagory: 'bot',
   name: 'ping',
   desc: 'Pong!',
-  aliases: ['aliases'],
   execute: async (message, args, client, db, packageInfo, Discord, member, mpembed) => {
      var milliseconds = parseInt((client.uptime % 1000) / 100),
   seconds = parseInt((client.uptime / 1000) % 60),
@@ -14,7 +13,6 @@ module.exports = {
   hours = (hours < 10) ? "0" + hours : hours;
   minutes = (minutes < 10) ? "0" + minutes : minutes;
   seconds = (seconds < 10) ? "0" + seconds : seconds;
-    if (!message.member.hasPermission('PERMS')) return message.reply(mpembed);
       const ping = await message.channel.send('Sending the Boops and the Beeps!');     
     ping.edit(new Discord.MessageEmbed()
       .setAuthor(client.user.username, client.user.avatarURL())
