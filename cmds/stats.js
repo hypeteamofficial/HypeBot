@@ -1,7 +1,7 @@
 const fs = require('fs');
 const osutils = require('os-utils');
 const version = require('../package.json')
-const ver = "1.0"
+const ver = "2.0"
 var bowner = '531186390717825074';
 const mpmsg = `!!ERROR!!\nYou dont have the required perms!`
 module.exports = {

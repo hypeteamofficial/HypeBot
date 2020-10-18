@@ -10,7 +10,7 @@ client.commands = new Discord.Collection();
 const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 client.once('ready', () => {
 	console.log('Ready to go!');
-client.user.setActivity(`on ${client.guilds.cache.size} Servers! | //help`, { type: 'PLAYING' });
+client.user.setActivity(`VER 1.5 | >help`, { type: 'PLAYING' });
 });
 const commandFolder = fs.readdirSync('./cmds').filter(file => file.endsWith('.js'));
 
@@ -65,6 +65,19 @@ client.on("guildMemberAdd", (member) => { //usage of welcome event
   .setColor(16295218)
   .setDescription(msg);
   client.channels.cache.get(chx).send(`Welcome to the server, ${member}`)
+  client.channels.cache.get(chx).send(wembed) //get channel and send embed
+});
+
+client.on("guildMemberRemove", (member) => { //usage of welcome event
+  let chx = db.get(`byechannel_${member.guild.id}`); //defining var
+  if(chx === null) { //check if var have value or not
+    return;
+  }
+
+  let wembed = new Discord.MessageEmbed() //define embed
+  .setAuthor(member.user.username, member.user.avatarURL())
+  .setColor(16295218)
+  .setDescription("Member left.");
   client.channels.cache.get(chx).send(wembed) //get channel and send embed
 })
 

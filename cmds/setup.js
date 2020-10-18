@@ -3,7 +3,7 @@ const mpmsg = `!!ERROR!!\nYou dont have the required perms!`
 module.exports = {
   catagory: 'bot',
   name: 'setup',
-  desc: 'Setup the server!\n``setup <announcement | Welcome> <#Channel>``',
+  desc: 'Setup the server!\n``setup <announcement | Welcome | goodbye> <#Channel>``',
   execute: async (message, args, client, db, packageInfo, Discord, member, mpembed) => {
   if (!message.member.hasPermission('MANAGE_GUILD') && !bowner.includes(message.author.id)) return message.reply(mpmsg);
   if (args[0] === `welcome`) {
@@ -39,6 +39,19 @@ module.exports = {
     db.set(`annchannel_${message.guild.id}`, channel.id) 
     
     message.channel.send(`Anouncement Channel is set to ${channel}!`) 
+
+  }
+
+  else if (args[0] === `goodbye`) {
+    const channel = message.mentions.channels.first() //mentioned channel
+    
+    if(!channel) { 
+      return message.channel.send("Please Mention the channel first")
+    }
+
+    db.set(`byechannel_${message.guild.id}`, channel.id) 
+    
+    message.channel.send(`Goodbye Channel is set to ${channel}!`) 
 
   }
 
