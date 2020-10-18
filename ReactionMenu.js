@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const Discord = require('discord.js');
 
 /**
  * Calypso's Reaction Menu class
@@ -96,13 +96,13 @@ module.exports = class ReactionMenu {
      */
     this.timeout = timeout;
 
-    const first = new MessageEmbed(this.json);
+    const first = new Discord.MessageEmbed(this.json);
     const description = (this.arr) ? this.arr.slice(this.current, this.interval) : null;
     if (description) first
-      .setTitle(this.embed.title + ' ' + this.client.utils.getRange(this.arr, this.current, this.interval))
+      .setTitle(this.embed.title + ' ' + description.utils.getRange(this.arr, this.current, this.interval))
       .setDescription(description);
 
-    this.channel.send(first).then(message => {
+    channel.send(first).then(message => {
 
       /**
        * The menu message
@@ -157,8 +157,8 @@ module.exports = class ReactionMenu {
   first() {
     if (this.current === 0) return;
     this.current = 0;
-    return new MessageEmbed(this.json)
-      .setTitle(this.embed.title + ' ' + this.client.utils.getRange(this.arr, this.current, this.interval))
+    return new Discord.MessageEmbed(this.json)
+      .setTitle(this.embed.title + ' ' + this.client.getRange(this.arr, this.current, this.interval))
       .setDescription(this.arr.slice(this.current, this.current + this.interval));
   }
 
@@ -169,8 +169,8 @@ module.exports = class ReactionMenu {
     if (this.current === 0) return;
     this.current -= this.interval;
     if (this.current < 0) this.current = 0;
-    return new MessageEmbed(this.json)
-      .setTitle(this.embed.title + ' ' + this.client.utils.getRange(this.arr, this.current, this.interval))
+    return new Discord.MessageEmbed(this.json)
+      .setTitle(this.embed.title + ' ' + client.utils.getRange(this.arr, this.current, this.interval))
       .setDescription(this.arr.slice(this.current, this.current + this.interval));
   }
 
@@ -183,7 +183,7 @@ module.exports = class ReactionMenu {
     this.current += this.interval;
     if (this.current >= this.max) this.current = cap;
     const max = (this.current + this.interval >= this.max) ? this.max : this.current + this.interval;
-    return new MessageEmbed(this.json)
+    return new Discord.MessageEmbed(this.json)
       .setTitle(this.embed.title + ' ' + this.client.utils.getRange(this.arr, this.current, this.interval))
       .setDescription(this.arr.slice(this.current, max));
   }
@@ -196,7 +196,7 @@ module.exports = class ReactionMenu {
     if (this.current === cap || this.current + this.interval === this.max) return;
     this.current = cap;
     if (this.current === this.max) this.current -= this.interval;
-    return new MessageEmbed(this.json)
+    return new Discord.MessageEmbed(this.json)
       .setTitle(this.embed.title + ' ' + this.client.utils.getRange(this.arr, this.current, this.interval))
       .setDescription(this.arr.slice(this.current, this.max));
   }
