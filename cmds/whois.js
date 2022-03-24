@@ -24,10 +24,10 @@ module.exports = {
   const embed = new d.MessageEmbed()
     .setAuthor(`${user.username}#${user.discriminator} `, user.avatarURL())
     .addField("ID", `${user.id}`, true)
-    .setColor(16295218)
+    .setColor(`${user.displayColor}`)
     .setTimestamp()
     .setURL(`${user.avatarURL()}`)
-    .addField("Currently", `${Presence[muser.presence.status]}`, true)
+    .addField("Currently", `${Presence[muser.presence.Status]}`, true)
     //.addField('Game', `${muser.presence.game === null ? "No Game" : muser.presence.game.name}`, true)
     .addField(
       "Account Created:",

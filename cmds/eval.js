@@ -1,5 +1,10 @@
+const fetch = require('node-superfetch');
+
 var bowner = '531186390717825074';
 const mpmsg = `!!ERROR!!\nYou dont have the required perms!`
+var numeral = require('numeral');
+const request = require("request");
+
 module.exports = {
   catagory: 'owner',
   name: 'eval',

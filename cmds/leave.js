@@ -5,7 +5,7 @@ module.exports = {
   name: 'leave',
   desc: 'Simulates someone leaving',
 execute: async (message, args, client, db, packageInfo, Discord, member) => {
-let chx = db.get(`byechannel_${message.guild.id}`);
+let chx = await db.get(`byechannel_${message.guild.id}`);
  if (!client.channels.cache.get(chx).permissionsFor(message.author).has('SEND_MESSAGES') && !ids.includes(message.author.id)) return message.reply(mpmsg);
     let user = message.author;
  if (user) member = message.guild.member(user);

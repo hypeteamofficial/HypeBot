@@ -1,4 +1,4 @@
-var ids = '531186390717825074';
+var bowner = '531186390717825074';
 const menu = require("d-reactor");
 module.exports = {
   catagory: 'bot',
@@ -34,19 +34,39 @@ module.exports = {
       const MessageEmbed = Discord.MessageEmbed;
       const ownerEmbed = new MessageEmbed()
         .setTitle('👑 Owner Commands!')
-        .setDescription('🤖 Main commands!\n🎉 Fun commands!\n🛠 Util commands!\n🔨 Mod commands!\n══════════════════════════');
+        .setColor(16295218)
+        .setDescription('🤖 Main commands!\n🎉 Fun commands!\n🔥 Reddit Commands!\n🛠 Util commands!\n🔨 Mod commands!\n══════════════════════════')
+        .setFooter('This menu will self distruct after 15 minutes after opening.');
       const mainEmbed = new MessageEmbed()
-        .setTitle('🤖 Hypebot Help')
-        .setDescription('🎉 Fun commands!\n🛠 Util commands!\n🔨 Mod commands!\n👑 Owner Commands!\n══════════════════════════');
+        .setTitle('Main commands!')
+        .setColor(16295218)
+        .setDescription('🎉 Fun commands!\n🔥 Reddit Commands!\n🛠 Util commands!\n🔨 Mod commands!\n══════════════════════════')
+        .setFooter('This menu will self distruct after 15 minutes after opening.');
       const funEmbed = new MessageEmbed()
         .setTitle('🎉 Fun commands!‎')
-        .setDescription('🤖 Main commands!\n🛠 Util commands!\n🔨 Mod commands!\n👑 Owner Commands!\n══════════════════════════');
+        .setColor(16295218)
+        .setDescription('🤖 Main commands!\n🔥 Reddit Commands!\n🛠 Util commands!\n🔨 Mod commands!\n══════════════════════════')
+        .setFooter('This menu will self distruct after 15 minutes after opening.');
+      const redditEmbed = new MessageEmbed()
+        .setTitle('🔥 Reddit commands!‎')
+        .setColor(16295218)
+        .setDescription('🤖 Main commands!\n🎉 Fun commands!\n🛠 Util commands!\n🔨 Mod commands!\n══════════════════════════')
+        .setFooter('This menu will self distruct after 15 minutes after opening.');
       const modEmbed = new MessageEmbed()
         .setTitle('🔨 Mod commands!')
-        .setDescription('🤖 Main commands!\n🎉 Fun commands!\n🛠 Util commands!\n👑 Owner Commands!\n══════════════════════════');
+        .setColor(16295218)
+        .setDescription('🤖 Main commands!\n🎉 Fun commands!\n🔥 Reddit Commands!\n🛠 Util commands!\n══════════════════════════')
+        .setFooter('This menu will self distruct after 15 minutes after opening.');
       const utilEmbed = new MessageEmbed()
         .setTitle('🛠 Util commands!')
-        .setDescription('🤖 Main commands!\n🎉 Fun commands!\n🔨 Mod commands!\n👑 Owner Commands!\n══════════════════════════');
+        .setColor(16295218)
+        .setDescription('🤖 Main commands!\n🎉 Fun commands!\n🔥 Reddit Commands!\n🔨 Mod commands!\n══════════════════════════')
+        .setFooter('This menu will self distruct after 15 minutes after opening.');
+      const CLOSED = new MessageEmbed()
+        .setTitle('❌ CLOSED ❌')
+        .setColor(16295218)
+        .setDescription('This command menu has been closed.')
+        .setFooter('This menu will self distruct after 15 seconds.');
       data.forEach(async cmdd => {
         cmdd.forEach(cmd => {
           var catagory = commands.get(cmd).catagory;
@@ -54,12 +74,15 @@ module.exports = {
           if (catagory === 'fun') { funEmbed.addField(cmd, dsc) }
           else if (catagory === 'mod') { modEmbed.addField(cmd, dsc) }
           else if (catagory === 'util') { utilEmbed.addField(cmd, dsc) }
+          else if (catagory === 'reddit') { redditEmbed.addField(cmd, dsc) }
           else if (catagory === 'owner') { ownerEmbed.addField(cmd, dsc) }
           else if (catagory === 'bot') { mainEmbed.addField(cmd, dsc) }
           else { mainEmbed.addField(cmd, dsc) }
         });
         const m = await message.channel.send(mainEmbed);
-        menu.buttons(
+        m.delete({ timeout: 900000 });
+      
+   await menu.buttons(
           m,
           {
             emoji: "🤖",
@@ -71,6 +94,13 @@ module.exports = {
             emoji: "🎉",
             async clicked() {
               await m.edit(funEmbed);
+            }
+          },
+          {
+            
+            emoji: "🔥",
+            async clicked() {
+              await m.edit(redditEmbed);
             }
           },
           {
@@ -86,24 +116,16 @@ module.exports = {
             }
           },
           {
-            emoji: "👑",
-            async clicked() {
-              if (!ids.includes(message.author.id)) return
-              await m.edit(ownerEmbed);
-            }
-          },
-          {
             emoji: "❌",
             async clicked(u, r) {
-              await m.delete();
-              const reply = await m.channel.send(`Help closed!`);
-              reply.delete({ timeout: 5000 });
+              await m.edit(CLOSED);
               r.cancel();
+              m.delete({ timeout: 15000 });
             }
           },
-        );
-
+        ); 
       });
+      
     }
   }
 

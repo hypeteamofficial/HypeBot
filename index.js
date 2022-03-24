@@ -1,8 +1,25 @@
+const ver = "4.0"
 const Discord = require('discord.js');
 const express = require('express');
 const app = express();
 const fs = require('fs');
-const db = require('quick.db');
+const fetch = require('node-superfetch');
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+function statusroll() {
+
+client.user.setActivity(`${client.guilds.cache.size} Servers!`, { type: 'WATCHING' });
+sleep(5000)
+client.user.setActivity(`//help`, { type: 'LISTENING' });
+sleep(5000)
+client.user.setActivity(`Version ${ver}`, { type: 'PLAYING' });  
+}
+const Database = require("@replit/database")
+const db = new Database()
+
 const client = new Discord.Client
 const token = process.env.TOKEN;
 const prefix = process.env.PREFIX;
@@ -10,8 +27,15 @@ client.commands = new Discord.Collection();
 const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 client.once('ready', () => {
 	console.log('Ready to go!');
-client.user.setActivity(`VER 1.5 | >help`, { type: 'PLAYING' });
+  statusroll()
+setInterval(function() {
+statusroll()
+
+}, 5 * 1000);
 });
+
+
+
 const commandFolder = fs.readdirSync('./cmds').filter(file => file.endsWith('.js'));
 
 for (const file of commandFolder) {
@@ -53,9 +77,9 @@ if (message.author.id == '745786473554378832') return; // SBT
 	}
 });
 
-client.on("guildMemberAdd", (member) => { //usage of welcome event
-  let chx = db.get(`welchannel_${member.guild.id}`); //defining var
-  let msg = db.get(`welmsg_${member.guild.id}`);
+client.on("guildMemberAdd",async (member) => { //usage of welcome event
+  let chx = await db.get(`welchannel_${member.guild.id}`); //defining var
+  let msg = await db.get(`welmsg_${member.guild.id}`);
   if(chx === null) { //check if var have value or not
     return;
   }
@@ -68,8 +92,8 @@ client.on("guildMemberAdd", (member) => { //usage of welcome event
   client.channels.cache.get(chx).send(wembed) //get channel and send embed
 });
 
-client.on("guildMemberRemove", (member) => { //usage of welcome event
-  let chx = db.get(`byechannel_${member.guild.id}`); //defining var
+client.on("guildMemberRemove",async (member) => { //usage of welcome event
+  let chx = await db.get(`byechannel_${member.guild.id}`); //defining var
   if(chx === null) { //check if var have value or not
     return;
   }

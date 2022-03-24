@@ -15,13 +15,13 @@ module.exports = {
     
     //Now we gonna use quick.db
     const filter = m => message.author.id === m.author.id;
-    db.set(`welchannel_${message.guild.id}`, channel.id) //set id in var
+   await db.set(`welchannel_${message.guild.id}`, channel.id) //set id in var
     
     message.channel.send(`Welcome Channel is set to ${channel}, Now What Will The Message Be?`) //send success message
     message.channel.awaitMessages(filter, { time: 60000, max: 1, errors: ['time'] })
 		.then(messages => {
 			message.channel.send(`The Message Will Be: ${messages.first().content}`);
-      db.set(`welmsg_${message.guild.id}`, messages.first().content)
+       db.set(`welmsg_${message.guild.id}`, messages.first().content)
 
 		})
 		.catch(() => {
@@ -36,7 +36,7 @@ module.exports = {
       return message.channel.send("Please Mention the channel first")
     }
 
-    db.set(`annchannel_${message.guild.id}`, channel.id) 
+     db.set(`annchannel_${message.guild.id}`, channel.id) 
     
     message.channel.send(`Anouncement Channel is set to ${channel}!`) 
 

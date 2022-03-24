@@ -1,28 +1,61 @@
 var bowner = '531186390717825074';
 const mpmsg = `!!ERROR!!\nYou dont have the required perms!`
 const request = require("request");
+const sub = "catpics"
+
 module.exports = {
-  catagory: 'fun',
+    catagory: 'reddit',
   name: 'catpic',
-  desc: 'Get a random cat image!',
-  aliases: ['cat'],
-  execute: async (message, args, client, db, packageInfo, Discord, member) => {
-      message.channel.startTyping();
-  request({
-    url: "https://api.thecatapi.com/v1/images/search?format=json&mime_types=jpg,png",
-    headers: {
-      "x-api-key": `99c5a375-7d62-4087-be82-000b30f1a325`
-    },
+  desc: 'Get a random post from r/catpics',
+  aliases: ['cat', 'pussy', 'kitty'],
+    execute: async (message, args, client, db, packageInfo, Discord, member) => {
+
+      // start
+const embed = new Discord.MessageEmbed();
+      
+message.channel.startTyping();
+      
+request({
+    uri: "https://www.reddit.com/r/" + sub + "/random/.json", // URL
     json: true
-  }, (error, response, body) => {
+}, (error, response, body, json) => {
     if (error) throw new Error(error);
+
+    const [list] = response.body;
+    const [post] = list.data.children;
+
+    const permalink = post.data.permalink;
+    const postUrl = `https://reddit.com${permalink}`;
+    const postImage = post.data.url;
+    const postTitle = post.data.title;
+    const postUpvotes = post.data.ups;
+    const postNumComments = post.data.num_comments;
+    const postAuthor = post.data.author;
+    const postDesc = post.data.selftext;
+  
+    embed.setTitle(`${postTitle}`);
+    embed.setAuthor(postAuthor);
+    embed.setThumbnail('https://styles.redditmedia.com/t5_2r9ic/styles/communityIcon_83lu88jjk2851.jpg')
+    embed.setDescription(postDesc);
+    embed.setURL(`${postUrl}`);
+    embed.setColor(16295218);
+
+  
+    if ( isValidImageURL(postImage) ){
+      embed.setImage(postImage);
+    }
+
+    function isValidImageURL(str){
+        if ( typeof str !== 'string' ) return false;
+        return !!str.match(/\w+\.(jpg|jpeg|gif|png|tiff|bmp)$/gi);
+    }
+    embed.setFooter(`👍 ${postUpvotes} 💬 ${postNumComments} | ` + "Provided by r/" + sub);
+    message.channel.send(embed);
+
     message.channel.stopTyping();
-    message.channel.send({
-      files: [{
-        attachment: body[0].url,
-        name: "cat.png"
-      }]
-    });
-  });
- if (message.deletable) return message.delete();
-}};
+});
+
+      //end
+      if (message.deletable) return message.delete();
+    }
+};

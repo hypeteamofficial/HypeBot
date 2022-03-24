@@ -6,7 +6,7 @@ module.exports = {
   desc: 'announce something.',
   usage: 'announce <announcement>',
   execute: async (message, args, client, db, packageInfo, Discord) => {
- let chx = db.get(`annchannel_${message.guild.id}`);
+ let chx = await db.get(`annchannel_${message.guild.id}`);
  if (!client.channels.cache.get(chx).permissionsFor(message.author).has('SEND_MESSAGES') && !ids.includes(message.author.id)) return message.reply(mpmsg);
    if (!args[0]) return message.reply('Please Imput A Announcement!');;
     args = args.join(" ");

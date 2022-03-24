@@ -22,6 +22,7 @@ module.exports = {
       message.channel.send(embed.setTitle(`Server List ${range}`).setDescription(servers.join('\n')));
     } else {
       new ReactionMenu(client, message.channel, message.member, embed, servers);
+      console.log(client)
     }
  if (message.deletable) return message.delete();
 }};

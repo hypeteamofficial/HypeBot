@@ -1,5 +1,5 @@
 {
     "supportinv": "https://discord.gg/Bm6fMsA",
-    "botinv": "https://discord.com/api/oauth2/authorize?client_id=745786473554378832&permissions=2080894070&redirect_uri=http%3A%2F%2Fbot.hypedev.ga&scope=bot"
+    "botinv": "https://discord.com/api/oauth2/authorize?client_id=745786473554378832&permissions=2080894070&redirect_uri=https://discord.gg/Bm6fMsA&scope=bot"
 
 }

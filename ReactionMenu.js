@@ -96,13 +96,13 @@ module.exports = class ReactionMenu {
      */
     this.timeout = timeout;
 
-    const first = new Discord.MessageEmbed(this.json);
-    const description = (this.arr) ? this.arr.slice(this.current, this.interval) : null;
-    if (description) first
-      .setTitle(this.embed.title + ' ' + description.utils.getRange(this.arr, this.current, this.interval))
+    this.embed = new Discord.MessageEmbed(this.json);
+    const description = (this.arr) ? this.arr.slice(this.current, this.interval): null;
+    if (description) this.embed
+      .setTitle(this.embed.title + ' ' + this.client.getRange(this.arr, this.current, this.interval))
       .setDescription(description);
 
-    channel.send(first).then(message => {
+    channel.send(this.embed).then(message => {
 
       /**
        * The menu message
@@ -158,7 +158,7 @@ module.exports = class ReactionMenu {
     if (this.current === 0) return;
     this.current = 0;
     return new Discord.MessageEmbed(this.json)
-      .setTitle(this.embed.title + ' ' + this.client.getRange(this.arr, this.current, this.interval))
+      .setTitle(this.embed.title + ' ' + client.getRange(this.arr, this.current, this.interval))
       .setDescription(this.arr.slice(this.current, this.current + this.interval));
   }
 
