@@ -8,7 +8,7 @@ module.exports = {
   name: 'mildlyinteresting',
   desc: 'Get a random post from r/mildlyinteresting',
   aliases: ['mildlyinteresting','interesting'],
-  execute: async (message, args, client, db, packageInfo, Discord, member) => {
+  execute: async (log, message, args, client, db, packageInfo, Discord, member) => {
       // start
 const embed = new Discord.MessageEmbed();
       

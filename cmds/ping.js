@@ -3,7 +3,7 @@ module.exports = {
   catagory: 'bot',
   name: 'ping',
   desc: 'Pong!',
-  execute: async (message, args, client, db, packageInfo, Discord, member, mpembed) => {
+  execute: async (log, message, args, client, db, packageInfo, Discord, member, mpembed) => {
      var milliseconds = parseInt((client.uptime % 1000) / 100),
   seconds = parseInt((client.uptime / 1000) % 60),
   minutes = parseInt((client.uptime / (1000 * 60)) % 60),

@@ -7,7 +7,7 @@ module.exports = {
   name: '507mm',
   desc: 'description',
   aliases: ['aliases'],
-  execute: async (message, args, client, db, packageInfo, Discord, member) => {
+  execute: async (log, message, args, client, db, packageInfo, Discord, member) => {
 const embed = new Discord.MessageEmbed();
       
 message.channel.startTyping();
@@ -32,7 +32,7 @@ var url = "http://507movements.com/mm_" + frn + '.html'
 
   },
   function (error) { // failure handler
-    console.log(error)
+    log.error(error)
     
  if (message.deletable) return message.delete();
 })}};

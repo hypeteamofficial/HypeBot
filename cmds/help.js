@@ -28,39 +28,39 @@ module.exports = {
     } else {
       const cArray = client.commands.array();
       data.push(commands.map(command => command.name));
-      console.log(data + ' data')
+
       //Create the embeds
       const Discord = require('discord.js');
       const MessageEmbed = Discord.MessageEmbed;
       const ownerEmbed = new MessageEmbed()
         .setTitle('👑 Owner Commands!')
         .setColor(16295218)
-        .setDescription('🤖 Main commands!\n🎉 Fun commands!\n🔥 Reddit Commands!\n🛠 Util commands!\n🔨 Mod commands!\n══════════════════════════')
+        .setDescription('🤖 Main commands!\n🎉 Fun commands!\n🔥 Reddit Commands!\n🛠 Util commands!\n🔨 Mod commands!\n<:lend:957352075707187270><:lmid:957352039334162534><:lstart:957351826368389200>')
         .setFooter('This menu will self distruct after 15 minutes after opening.');
       const mainEmbed = new MessageEmbed()
         .setTitle('Main commands!')
         .setColor(16295218)
-        .setDescription('🎉 Fun commands!\n🔥 Reddit Commands!\n🛠 Util commands!\n🔨 Mod commands!\n══════════════════════════')
+        .setDescription('🎉 Fun commands!\n🔥 Reddit Commands!\n🛠 Util commands!\n🔨 Mod commands!\n<:lend:957352075707187270><:lmid:957352039334162534><:lstart:957351826368389200>')
         .setFooter('This menu will self distruct after 15 minutes after opening.');
       const funEmbed = new MessageEmbed()
         .setTitle('🎉 Fun commands!‎')
         .setColor(16295218)
-        .setDescription('🤖 Main commands!\n🔥 Reddit Commands!\n🛠 Util commands!\n🔨 Mod commands!\n══════════════════════════')
+        .setDescription('🤖 Main commands!\n🔥 Reddit Commands!\n🛠 Util commands!\n🔨 Mod commands!\n<:lend:957352075707187270><:lmid:957352039334162534><:lstart:957351826368389200>')
         .setFooter('This menu will self distruct after 15 minutes after opening.');
       const redditEmbed = new MessageEmbed()
         .setTitle('🔥 Reddit commands!‎')
         .setColor(16295218)
-        .setDescription('🤖 Main commands!\n🎉 Fun commands!\n🛠 Util commands!\n🔨 Mod commands!\n══════════════════════════')
+        .setDescription('🤖 Main commands!\n🎉 Fun commands!\n🛠 Util commands!\n🔨 Mod commands!\n<:lend:957352075707187270><:lmid:957352039334162534><:lstart:957351826368389200>')
         .setFooter('This menu will self distruct after 15 minutes after opening.');
       const modEmbed = new MessageEmbed()
         .setTitle('🔨 Mod commands!')
         .setColor(16295218)
-        .setDescription('🤖 Main commands!\n🎉 Fun commands!\n🔥 Reddit Commands!\n🛠 Util commands!\n══════════════════════════')
+        .setDescription('🤖 Main commands!\n🎉 Fun commands!\n🔥 Reddit Commands!\n🛠 Util commands!\n<:lend:957352075707187270><:lmid:957352039334162534><:lstart:957351826368389200>')
         .setFooter('This menu will self distruct after 15 minutes after opening.');
       const utilEmbed = new MessageEmbed()
         .setTitle('🛠 Util commands!')
         .setColor(16295218)
-        .setDescription('🤖 Main commands!\n🎉 Fun commands!\n🔥 Reddit Commands!\n🔨 Mod commands!\n══════════════════════════')
+        .setDescription('🤖 Main commands!\n🎉 Fun commands!\n🔥 Reddit Commands!\n🔨 Mod commands!\n<:lend:957352075707187270><:lmid:957352039334162534><:lstart:957351826368389200>')
         .setFooter('This menu will self distruct after 15 minutes after opening.');
       const CLOSED = new MessageEmbed()
         .setTitle('❌ CLOSED ❌')

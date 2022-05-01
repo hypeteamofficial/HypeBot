@@ -6,7 +6,7 @@ module.exports = {
     name: 'dadjoke',
     desc: 'Get a random dadjoke',
     aliases: ['joke'],
-    execute: async (message, args, client, db, packageInfo, Discord, member) => {
+    execute: async (log, message, args, client, db, packageInfo, Discord, member) => {
         var joke = await fetch
             .get("https://icanhazdadjoke.com/")
             .set("Accept", "application/json");
@@ -19,8 +19,8 @@ module.exports = {
             return message.channel.send({embed });
 
         } catch (err) {
-            return message.channel.send(`Consult your dad! My API isn't working!`)
-
+            return message.channel.send(`Command failed, try again.`)
+            log.error(err)
         }
         if (message.deletable) return message.delete();
     }

@@ -4,7 +4,7 @@ module.exports = {
   name: 'say',
   desc: 'Says somthing in a embed!',
   aliases: ['echo'],
-  execute: async (message, args, client, db, packageInfo, Discord, member) => {
+  execute: async (log, message, args, client, db, packageInfo, Discord, member) => {
     if (!args[0]) return message.reply('You need to imput a Message BOI');
     args = args.join(" ");
       const embed = new Discord.MessageEmbed()

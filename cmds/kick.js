@@ -14,11 +14,11 @@ if (!message.member.hasPermission('KICK_MEMBERS') && !bowner.includes(message.au
         member
           .kick('Kicked Using Hype Bot!')
           .then(() => {
-            message.reply(`Successfully kicked ${user.tag}!\nHe Can Join Again But If He Wants.`);
+            message.reply(`Successfully kicked ${user.tag}!\nHe Can Join Again If He Wants.`);
           })
           .catch(err => {
             message.reply('I was unable to kick the member?');
-            console.error(err);
+            log.error(err);
           });
       } else {
         message.reply("That user isn't in this guild!");

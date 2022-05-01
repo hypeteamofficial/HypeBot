@@ -1,2 +1,2 @@
 nplanguage = "nodejs"
-run="export PATH=$PATH:$(pwd)/node_modules/.bin; pm2 delete -s app || :; pm2 start index.js --name=app;  pm2 logs"  
+run="export PATH=$PATH:$(pwd)/node_modules/.bin; pm2-runtime start ecosystem.config.js --env production; pm2 install pm2-discord; pm2 set pm2-discord:discord_url https://discord.com/api/webhooks/961295651189186590/fi_Y0TQL0IBxBe-qAZTYoH-rAkNRmB7q6mC3ewRmn3t6NN32izfUbd0mkF-RuT46orng" 

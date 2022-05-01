@@ -6,7 +6,7 @@ module.exports = {
   name: '8ball',
   desc: 'Ask The Majik 8Ball a question!',
   aliases: ["magicball", "magikball", "magic8ball", "magik8ball", "eightball"],
-  execute: async (message, args, client, db, packageInfo, Discord, member) => {
+  execute: async (log, message, args, client, db, packageInfo, Discord, member) => {
     const responses = [
     "It is certain",
     "It is decidedly so",

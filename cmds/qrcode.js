@@ -6,7 +6,7 @@ module.exports = {
   catagory: 'util',
   name: 'qrcode',
   desc: 'Make A QR Code!',
-  execute: async (message, args, client, db, packageInfo, Discord, member) => {
+  execute: async (log, message, args, client, db, packageInfo, Discord, member) => {
     const qrOutput = tempy.file({ extension: "png" });
   message.channel.startTyping();
   if (args.length > 0) {

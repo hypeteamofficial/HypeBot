@@ -5,7 +5,7 @@ module.exports = {
   name: 'purge',
   desc: 'Delete Up To 100 Messages!',
   aliases: ['clean'],
-  execute: async (message, args, client, db, packageInfo, Discord, member) => {
+  execute: async (log, message, args, client, db, packageInfo, Discord, member) => {
       if (!message.member.hasPermission('MANAGE_MESSAGES') && !bowner.includes(message.author.id)) return message.reply(mpmsg);
       if (!message.deletable) return message.reply("I Can Not Delete Messages. :(")
       message.delete();

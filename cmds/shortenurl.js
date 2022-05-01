@@ -7,7 +7,7 @@ module.exports = {
   name: 'shortenurl',
   desc: 'A Url Shortener',
   aliases: ["urlshorten", "shortenlink", "urishorten", "shortenurl"],
-  execute: async (message, args, client, db, packageInfo, Discord, member) => {
+  execute: async (log, message, args, client, db, packageInfo, Discord, member) => {
   message.channel.startTyping();
   if (args.length === 0) {
     message.channel.stopTyping();

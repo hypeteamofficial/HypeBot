@@ -9,10 +9,10 @@ module.exports = {
   name: 'NAME',
   desc: 'description',
   aliases: ['aliases'],
-  execute: async (message, args, client, db, packageInfo, Discord, member) => {
+  execute: async (log, message, args, client, db, packageInfo, Discord, member) => {
     if (!bowner.includes(message.author.id)) return message.reply(mpmsg);
 
  if (message.deletable) return message.delete();
 }};
 
-// 
+// LOG styles  silly verbose info data help warn debug error server

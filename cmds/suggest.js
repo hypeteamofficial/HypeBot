@@ -6,7 +6,7 @@ module.exports = {
   name: 'suggest',
   desc: 'Suggests something to **HYPE DEVELOPMENT**!',
   usage: 'suggest <suggestion>',
-  execute: async (message, args, client, db, packageInfo, Discord) => {
+  execute: async (log, message, args, client, db, packageInfo, Discord) => {
    if (!args[0]) return message.reply('You need to imput a Suggestion BOI');;
     if (args[0] === "bug") return message.reply("Please give a suggestion.");
     args = args.join(" ");
@@ -23,7 +23,7 @@ module.exports = {
     .setTitle(`SUGGESTION`)
     .setDescription(args)                
     .setColor(16295218)
-    .addField("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬", `INFO`)
+    .addField("<:lend:957352075707187270><:lmid:957352039334162534><:lstart:957351826368389200>", `INFO`)
     .addField("SERVER:", message.guild.name)
     .addField("MEMBER ID:", message.author.id)
     .addField("SERVER ID:", message.guild.id)

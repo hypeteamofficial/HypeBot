@@ -8,7 +8,7 @@ module.exports = {
   name: 'NAME',
   desc: 'DESCR',
   aliases: ['aliases'],
-  execute: async (message, args, client, db, packageInfo, Discord, member) => {
+  execute: async (log, message, args, client, db, packageInfo, Discord, member) => {
       // start
 const embed = new Discord.MessageEmbed();
       
@@ -18,7 +18,7 @@ request({
     uri: "https://www.reddit.com/r/" + sub + "/random/.json", // URL
     json: true
 }, (error, response, body, json) => {
-    if (error) throw new Error(error);
+    if (error) throw new log.error(error);
 
     const [list] = response.body;
     const [post] = list.data.children;

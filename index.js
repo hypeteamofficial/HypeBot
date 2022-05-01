@@ -1,37 +1,59 @@
 const ver = "4.0"
+module.exports.version = ver;
+
 const Discord = require('discord.js');
 const express = require('express');
+const log = require('betterlogs-discord');
 const app = express();
 const fs = require('fs');
 const fetch = require('node-superfetch');
-function sleep(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
-function statusroll() {
-
-client.user.setActivity(`${client.guilds.cache.size} Servers!`, { type: 'WATCHING' });
-sleep(5000)
-client.user.setActivity(`//help`, { type: 'LISTENING' });
-sleep(5000)
-client.user.setActivity(`Version ${ver}`, { type: 'PLAYING' });  
-}
 const Database = require("@replit/database")
-const db = new Database()
+const customisation = require('./customisation.json');
+const badge = {
+ "531186390717825074": "<:hypeshiny:957343373503655976>"
+}
 
+const db = new Database()
 const client = new Discord.Client
+client
+    .on("warn", log.warn)
 const token = process.env.TOKEN;
 const prefix = process.env.PREFIX;
+
 client.commands = new Discord.Collection();
 const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+
+function sleep(ms) {
+  return new Promise(
+    resolve => setTimeout(resolve, ms)
+  );
+}
+
+
+async function statusroll() {
+  const customstatus = await db.get(`cst`);
+
+await client.user.setActivity(customstatus, { type: 'PLAYING' }); await sleep(30000)
+await client.user.setActivity(`${client.guilds.cache.size} Servers!`, { type: 'WATCHING' });
+await sleep(30000)
+await client.user.setActivity(`${client.channels.cache.size} channels!`, { type: 'LISTENING' });
+await sleep(30000)
+await client.user.setActivity(`//help`, { type: 'LISTENING' });
+await sleep(30000)
+await client.user.setActivity(`Version ${ver}`, { type: 'PLAYING' }); 
+await sleep(30000)
+}
+
+
+
 client.once('ready', () => {
-	console.log('Ready to go!');
+	log.server('HypeBot online!');
   statusroll()
 setInterval(function() {
 statusroll()
 
-}, 5 * 1000);
+}, 5*30000);
 });
 
 
@@ -40,12 +62,11 @@ const commandFolder = fs.readdirSync('./cmds').filter(file => file.endsWith('.js
 
 for (const file of commandFolder) {
     const command = require(`./cmds/${file}`);
-
     client.commands.set(command.name, command);
 }
-//member
+//member 963510856560312351
 client.on('message', message => {
-  if(message.author.bot) return;       
+if(message.author.bot) return;
   	const prefixRegex = new RegExp(`^(<@!?${client.user.id}> |${escapeRegex(prefix)})\\s*`);
 	if (!prefixRegex.test(message.content)) return;
 	const [, matchedPrefix] = message.content.match(prefixRegex);
@@ -70,9 +91,9 @@ if (message.author.id == '745786473554378832') return; // SBT
  
 	try {
     const packageInfo = require('./package.json');
-		command.execute(message, args, client, db, packageInfo, Discord);
+		command.execute(log, message, args, client, db, packageInfo, Discord, badge);
 	} catch (error) {
-		console.error(error);
+		log.error(error);
 		message.reply('there was an error trying to execute that command!');
 	}
 });
@@ -106,15 +127,18 @@ client.on("guildMemberRemove",async (member) => { //usage of welcome event
 })
 
 client.login(token);
-
+client
+    // .on("debug", log.debug)
+    .on("warn", log.warn)
+ 
 
 // Web Stuff
-app.get('/', (req, res) => {
-    res.send(`\n CDN | ONLINE`);
-});
-app.get('/cdn/:fname', (req, res) => {
- if (!fs.readFileSync('./cdn/' + req.params.fname)) r404(res)
- else
-  res.sendFile(__dirname + '/cdn/' + req.params.fname);
-});
-app.listen(3000, () => console.log('Online!'));
+//app.get('/', (req, res) => {
+//    res.send(`\n CDN | ONLINE`);
+//});
+//app.get('/cdn/:fname', (req, res) => {
+// if (!fs.readFileSync('./cdn/' + req.params.fname)) r404(res)
+// else
+//  res.sendFile(__dirname + '/cdn/' + req.params.fname);
+//});
+//app.listen(3000, () => log.server('CDN Online!'));

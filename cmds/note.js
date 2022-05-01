@@ -5,7 +5,7 @@ module.exports = {
   name: 'note',
   desc: 'Says somthing in a embed!',
   aliases: ['addnote'],
-  execute: async (message, args, client, db, packageInfo, Discord, member) => {
+  execute: async (log, message, args, client, db, packageInfo, Discord, member) => {
       if (!bowner.includes(message.author.id)) return message.reply('You do not have the power to do this');
     if (!args[0]) return message.reply('You need to imput a Message BOI');
     args = args.join(" ");

@@ -4,7 +4,7 @@ module.exports = {
   catagory: 'util',
   name: 'join',
   desc: 'Simulates someone joining',
-execute: async (message, args, client, db, packageInfo, Discord, member) => {
+execute: async (log, message, args, client, db, packageInfo, Discord, member) => {
  let chx = await db.get(`welchannel_${message.guild.id}`);
  if (!client.channels.cache.get(chx).permissionsFor(message.author).has('SEND_MESSAGES') && !ids.includes(message.author.id)) return message.reply(mpmsg);
     let user = message.author;

@@ -35,11 +35,13 @@ module.exports = {
   catagory: 'util',
   name: 'serverinfo',
   desc: 'Get The Servers Info',
-  execute: async (message, args, client, db, packageInfo, Discord, member) => {
+  execute: async (log, message, args, client, db, packageInfo, Discord, member) => {
             const roles = message.guild.roles.cache
                 .sort((a, b) => b.position - a.position)
                 .map((role) => role.toString());
-            const members = message.guild.members.cache;
+
+            
+            const members = message.guild.memberCount;
             const emojis = message.guild.emojis.cache;
             const embed = new Discord.MessageEmbed()
                 .setDescription(
@@ -76,13 +78,7 @@ module.exports = {
                 .addField(
                     "\u200b",
                     [
-                        `**⌚ Time Created:** ${moment(
-                            message.guild.createdTimestamp,
-                        ).format("LT")} ${moment(
-                            message.guild.createdTimestamp,
-                        ).format("LL")} ${moment(
-                            message.guild.createdTimestamp,
-                        ).fromNow()}`,
+                        `**⌚ Time Created:** <t:${parseInt(message.guild.createdTimestamp / 1000)}:t> <t:${parseInt(message.guild.createdTimestamp / 1000)}:D> | <t:${parseInt(message.guild.createdTimestamp / 1000)}:R>`,
                     ],
                 
                 )

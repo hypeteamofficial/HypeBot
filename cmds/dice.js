@@ -5,7 +5,7 @@ module.exports = {
   name: 'dice',
   desc: 'Role a die!',
   aliases: ["roll", "die", "rng", "random"],
-  execute: async (message, args, client, db, packageInfo, Discord, member) => {
+  execute: async (log, message, args, client, db, packageInfo, Discord, member) => {
     const m = await message.channel.send(`🎲 *ROLLING*`)
     await setTimeout(() => {   
     let random = Math.floor((Math.random() * 6));

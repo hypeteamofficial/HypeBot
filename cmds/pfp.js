@@ -5,7 +5,7 @@ module.exports = {
   name: 'pfp',
   desc: '*Steal* someones avatar!',
   aliases: ['avatar'],
-  execute: async (message, args, client, db, packageInfo, Discord, member) => {
+  execute: async (log, message, args, client, db, packageInfo, Discord, member) => {
      if (args.length === 0) {
     message.channel.send(message.author.displayAvatarURL({size: 1024, format: "png"}));
   } else if (message.mentions.users.first() !== undefined) {

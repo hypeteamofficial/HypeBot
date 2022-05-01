@@ -6,7 +6,7 @@ module.exports = {
   name: 'giverole',
   desc: 'Give a user a role',
   aliases: ['addrole'],
-  execute: async (message, args, client, db, packageInfo, Discord) => {
+  execute: async (log, message, args, client, db, packageInfo, Discord) => {
       if (!message.member.hasPermission('MANAGE_ROLES') && !bowner.includes(message.author.id)) return message.reply(mpmsg);
 
 }};
