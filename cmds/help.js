@@ -5,7 +5,7 @@ module.exports = {
   name: 'help',
   desc: '(The one you just ran!) List of all commands!',
   aliases: ['?', 'cmds'],
-  execute: async (message, args, client, db, packageInfo, Discord, member) => {
+  execute: async (log, message, args, client, db, packageInfo, Discord, member) => {
     const commands = client.commands;
     const data = [];
     if (args[0]) {
