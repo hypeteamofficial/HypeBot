@@ -6,6 +6,7 @@ module.exports = {
   desc: '(The one you just ran!) List of all commands!',
   aliases: ['?', 'cmds'],
   execute: async (log, message, args, client, db, packageInfo, Discord, member) => {
+
     const commands = client.commands;
     const data = [];
     if (args[0]) {
@@ -79,10 +80,18 @@ module.exports = {
           else if (catagory === 'bot') { mainEmbed.addField(cmd, dsc) }
           else { mainEmbed.addField(cmd, dsc) }
         });
+
         const m = await message.channel.send(mainEmbed);
-        m.delete({ timeout: 900000 });
-      
-   await menu.buttons(
+
+        setTimeout(function close() {
+          m.edit(CLOSED);
+          m.reactions.removeAll()
+          m.delete({ timeout: 15000 });
+          if (message.deletable) return message.delete();
+        }, 900000);
+
+
+        await menu.buttons(
           m,
           {
             emoji: "🤖",
@@ -97,7 +106,7 @@ module.exports = {
             }
           },
           {
-            
+
             emoji: "🔥",
             async clicked() {
               await m.edit(redditEmbed);
@@ -118,15 +127,21 @@ module.exports = {
           {
             emoji: "❌",
             async clicked(u, r) {
-              await m.edit(CLOSED);
+              m.edit(CLOSED);
+              m.reactions.removeAll()
+              m.delete({ timeout: 15000 })
+              if (message.deletable) return message.delete();
+
               r.cancel();
-              m.delete({ timeout: 15000 });
+
             }
           },
-        ); 
+        );
+
       });
-      
+
     }
+
   }
 
 };

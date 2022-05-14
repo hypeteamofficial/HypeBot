@@ -9,19 +9,32 @@ const fs = require('fs');
 const fetch = require('node-superfetch');
 const Database = require("@replit/database")
 const customisation = require('./customisation.json');
+const Scratch = require("new-scratch3-api");
 const badge = {
- "531186390717825074": "<:hypeshiny:957343373503655976>"
+  "531186390717825074": "<:hypeshiny:957343373503655976>"
 }
 
 const db = new Database()
 const client = new Discord.Client
 client
-    .on("warn", log.warn)
+  .on("warn", log.warn)
 const token = process.env.TOKEN;
 const prefix = process.env.PREFIX;
+const scratchpass = process.env.SCRATCHPASS;
 
+const altprefix = `$`;
 client.commands = new Discord.Collection();
 const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+// Scratch
+async function loadScratchBOT() {
+scratchBOT = new Scratch.UserSession();
+await scratchBOT.load("HypeBot", scratchpass);
+const valid = await scratchBOT.verify();
+if (valid) log.server(`ScratchBot online!`)
+if (!valid) log.server(`ScratchBot offline!`)
+
+}
 
 
 function sleep(ms) {
@@ -34,26 +47,26 @@ function sleep(ms) {
 async function statusroll() {
   const customstatus = await db.get(`cst`);
 
-await client.user.setActivity(customstatus, { type: 'PLAYING' }); await sleep(30000)
-await client.user.setActivity(`${client.guilds.cache.size} Servers!`, { type: 'WATCHING' });
-await sleep(30000)
-await client.user.setActivity(`${client.channels.cache.size} channels!`, { type: 'LISTENING' });
-await sleep(30000)
-await client.user.setActivity(`//help`, { type: 'LISTENING' });
-await sleep(30000)
-await client.user.setActivity(`Version ${ver}`, { type: 'PLAYING' }); 
-await sleep(30000)
+  await client.user.setActivity(customstatus, { type: 'PLAYING' }); await sleep(30000)
+  await client.user.setActivity(`${client.guilds.cache.size} Servers!`, { type: 'WATCHING' });
+  await sleep(30000)
+  await client.user.setActivity(`${client.channels.cache.size} channels!`, { type: 'LISTENING' });
+  await sleep(30000)
+  await client.user.setActivity(`//help`, { type: 'LISTENING' });
+  await sleep(30000)
+  await client.user.setActivity(`Version ${ver}`, { type: 'PLAYING' });
+  await sleep(30000)
 }
 
 
 
 client.once('ready', () => {
-	log.server('HypeBot online!');
+  log.server('HypeBot online!');
   statusroll()
-setInterval(function() {
-statusroll()
+  setInterval(function() {
+    statusroll()
 
-}, 5*30000);
+  }, 5 * 30000);
 });
 
 
@@ -61,76 +74,104 @@ statusroll()
 const commandFolder = fs.readdirSync('./cmds').filter(file => file.endsWith('.js'));
 
 for (const file of commandFolder) {
-    const command = require(`./cmds/${file}`);
-    client.commands.set(command.name, command);
+  const command = require(`./cmds/${file}`);
+  client.commands.set(command.name, command);
 }
 //member 963510856560312351
 client.on('message', message => {
-if(message.author.bot) return;
-  	const prefixRegex = new RegExp(`^(<@!?${client.user.id}> |${escapeRegex(prefix)})\\s*`);
-	if (!prefixRegex.test(message.content)) return;
-	const [, matchedPrefix] = message.content.match(prefixRegex);
-	const args = message.content.slice(matchedPrefix.length).trim().split(/ +/);
+  if (message.author.bot) return;
+  const prefixRegex = new RegExp(`^(<@!?${client.user.id}> |${escapeRegex(prefix)}|${escapeRegex(altprefix)})\\s*`);
+  if (!prefixRegex.test(message.content)) return;
+  const [, matchedPrefix] = message.content.match(prefixRegex);
+  const args = message.content.slice(matchedPrefix.length).trim().split(/ +/);
 
-	const commandName = args.shift().toLowerCase();
-if (message.author.id == '745786473554378832') return; // SBT
-	const command = client.commands.get(commandName)
-		|| client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
-	if (!command) return;
+  const commandName = args.shift().toLowerCase();
+  if (message.author.id == '745786473554378832') return; // SBT
+  const command = client.commands.get(commandName)
+    || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+  if (!command) return;
 
-	if (command.args && !args.length) {
-		let reply = `You didn't provide any arguments, ${message.author}!`;
+  if (command.args && !args.length) {
+    let reply = `You didn't provide any arguments, ${message.author}!`;
 
-		if (command.usage) {
-			reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
-		}
+    if (command.usage) {
+      reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+    }
 
-		return message.channel.send(reply);
-	
-};
- 
-	try {
+    return message.channel.send(reply);
+
+  };
+
+  try {
     const packageInfo = require('./package.json');
-		command.execute(log, message, args, client, db, packageInfo, Discord, badge);
-	} catch (error) {
-		log.error(error);
-		message.reply('there was an error trying to execute that command!');
-	}
+    command.execute(log, message, args, client, db, packageInfo, Discord, badge, scratchBOT, Scratch);
+  } catch (error) {
+    log.error(error);
+    message.reply('there was an error trying to execute that command!');
+  }
 });
-
-client.on("guildMemberAdd",async (member) => { //usage of welcome event
+function isValidImageURL(str) {
+  if (typeof str !== 'string') return false;
+  return !!str.match(/\w+\.(jpg|jpeg|gif|png|tiff|bmp|webp)$/gi);
+}
+client.on("guildMemberAdd", async (member) => { //usage of welcome event
   let chx = await db.get(`welchannel_${member.guild.id}`); //defining var
   let msg = await db.get(`welmsg_${member.guild.id}`);
-  if(chx === null) { //check if var have value or not
+  let user = member.user
+  let pfplink = user.displayAvatarURL({ format: "png" })
+
+  if (chx === null) { //check if var have value or not
     return;
   }
 
   let wembed = new Discord.MessageEmbed() //define embed
-  .setAuthor(member.user.username, member.user.avatarURL())
-  .setColor(16295218)
-  .setDescription(msg);
+    .setColor(16295218)
+    .setDescription(msg);
+
+  if (isValidImageURL(pfplink)) {
+    wembed.setURL(`https://discordapp.com/users/${user.id}`)
+    wembed.setAuthor(`${user.username}#${user.discriminator} `, pfplink)
+  } else {
+    wembed.setAuthor(`${user.username}#${user.discriminator} `)
+  }
+
   client.channels.cache.get(chx).send(`Welcome to the server, ${member}`)
+
+
+
+
   client.channels.cache.get(chx).send(wembed) //get channel and send embed
 });
 
-client.on("guildMemberRemove",async (member) => { //usage of welcome event
+client.on("guildMemberRemove", async (member) => { //usage of welcome event
   let chx = await db.get(`byechannel_${member.guild.id}`); //defining var
-  if(chx === null) { //check if var have value or not
+  let user = member.user
+  let pfplink = user.displayAvatarURL({ format: "png" })
+  if (chx === null) { //check if var have value or not
     return;
   }
 
   let wembed = new Discord.MessageEmbed() //define embed
-  .setAuthor(member.user.username, member.user.avatarURL())
-  .setColor(16295218)
-  .setDescription("Member left.");
+    .setAuthor(member.user.username, member.user.avatarURL())
+    .setColor(16295218)
+    .setDescription("Member left.");
+
+  if (isValidImageURL(pfplink)) {
+    wembed.setURL(`https://discordapp.com/users/${user.id}`)
+    wembed.setAuthor(`${user.username}#${user.discriminator} `, pfplink)
+  } else {
+    wembed.setAuthor(`${user.username}#${user.discriminator} `)
+  }
+
   client.channels.cache.get(chx).send(wembed) //get channel and send embed
 })
 
 client.login(token);
+loadScratchBOT()
 client
-    // .on("debug", log.debug)
-    .on("warn", log.warn)
- 
+  // .on("debug", log.debug)
+  .on("warn", log.warn)
+
 
 // Web Stuff
 //app.get('/', (req, res) => {

@@ -26,12 +26,12 @@ module.exports = {
     let muser = message.guild.member(message.mentions.users.first());
     if (!muser) muser = message.member;
     if (!user) user = message.author;
+    
     const d = Discord;
         const embed = new d.MessageEmbed()
         .addField("ID", `${user.id}`, true)
         .setColor(`${muser.displayHexColor}`)
         .setTimestamp()
-        .setURL(`${user.avatarURL()}`)
         .addField("Currently", `${Presence[user.presence.status]}`, true)
 
         .addField(
@@ -53,29 +53,39 @@ module.exports = {
 
 
     
-      if (bowner.includes(message.author.id)) {
+      if (bowner.includes(user.id)) {
         embed.addField(
           "Joined Discord:",
           `<t:${parseInt(1528843292427 / 1000)}:R>`,
           true
         )
-      }
-      if (bowner.includes(message.author.id)) {
+      };
+      if (bowner.includes(user.id)) {
         embed.setFooter(`I am the owner of this bot!`)
       };
 
 
-    
-//    if (badge.includes(message.author.id)) {
-//        embed.setAuthor(`${user.username}#${user.discriminator} ${badge[user.id]}`, user.avatarURL())
-//      };
-//    if (!badge.includes(message.author.id)) {
-        embed.setAuthor(`${user.username}#${user.discriminator} `, user.avatarURL())
-//      };
+function isValidImageURL(str){
+ if ( typeof str !== 'string' ) return false;
+ return !!str.match(/\w+\.(jpg|jpeg|gif|png|tiff|bmp|webp)$/gi);
+ }
+  let pfplink = user.displayAvatarURL({format: "png"})
+  if (isValidImageURL(pfplink)){
+      embed.setURL(`${pfplink}`)
+      embed.setAuthor(`${user.username}#${user.discriminator} `, pfplink)
+    } else {
+    embed.setAuthor(`${user.username}#${user.discriminator} `)
+  }
 
 
-    
+
+
+
       message.channel.send({ embed });
       if (message.deletable) return message.delete();
     }
   };
+
+
+
+////////////
