@@ -13,7 +13,7 @@ const io = new Server(server);
 
 const fs = require('fs');
 
-
+const dburl = process.env.DBURL;
 const Database = require("@replit/database")
 // const Scratch = require("new-scratch3-api");
 const badge = {
@@ -25,7 +25,7 @@ const bot = {
   "bowner": ""
 }
 
-const db = new Database()
+const db = new Database(dburl)
 const client = new Discord.Client
 client
   .on("warn", log.warn)
@@ -59,7 +59,7 @@ function sleep(ms) {
 server.listen(2009);
 
 app.get('/', (req, res) => {
-  res.sendFile('/vercel/path0/index.html');
+  res.sendFile(__dirname + '/index.html');
 });
 async function webload() {
   text = await db.get(`currentStatus`);
