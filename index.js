@@ -59,7 +59,7 @@ function sleep(ms) {
 server.listen(2009);
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile('/vercel/path0/index.html');
 });
 async function webload() {
   text = await db.get(`currentStatus`);
