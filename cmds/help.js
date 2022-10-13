@@ -1,11 +1,36 @@
 var bowner = '531186390717825074';
 const menu = require("d-reactor");
+// levels
+const level = 1 // 0 Disabled | 1 Enabled | 2 Testing | 3 Debug | 4 Developer Only
+const stext = {
+  0: "Disabled",
+  1: "Enabled",
+  2: "Testing",
+  3: "Debug",
+  4: "Developer Only",
+}
+const semote = {
+  0: "<:Disabled:992541962802573362>",
+  1: "<:Enabled:992541963721117696>",
+  2: "<:Beta:992541966531317760>",
+  3: "<:Debug:992541964664832202>",
+  4: "<:DeveloperOnly:992541965583401050>",
+}
+const status = `${semote[level]} ${stext[level]}`
+
 module.exports = {
+  status,
+  level,
   catagory: 'bot',
   name: 'help',
   desc: '(The one you just ran!) List of all commands!',
   aliases: ['?', 'cmds'],
   execute: async (log, message, args, client, db, packageInfo, Discord, member) => {
+// levels
+ if (level == 0) return message.reply(`This command is Disabled! ${status}`);
+ if (level == 4 && !bowner.includes(message.author.id)) return message.reply("This command is Developer only!");
+ if (level == 3 && !bowner.includes(message.author.id)) return message.reply("This command is in debug mode!");
+ if (level == 2 && !bowner.includes(message.author.id)) return message.reply("This command is being tested!");
 
     const commands = client.commands;
     const data = [];
@@ -72,13 +97,15 @@ module.exports = {
         cmdd.forEach(cmd => {
           var catagory = commands.get(cmd).catagory;
           var dsc = commands.get(cmd).desc;
-          if (catagory === 'fun') { funEmbed.addField(cmd, dsc) }
-          else if (catagory === 'mod') { modEmbed.addField(cmd, dsc) }
-          else if (catagory === 'util') { utilEmbed.addField(cmd, dsc) }
-          else if (catagory === 'reddit') { redditEmbed.addField(cmd, dsc) }
-          else if (catagory === 'owner') { ownerEmbed.addField(cmd, dsc) }
-          else if (catagory === 'bot') { mainEmbed.addField(cmd, dsc) }
-          else { mainEmbed.addField(cmd, dsc) }
+          var level = commands.get(cmd).level;
+          var title = `${cmd}  ${semote[level]}`
+          if (catagory === 'fun') { funEmbed.addField(title, dsc) }
+          else if (catagory === 'mod') { modEmbed.addField(title, dsc) }
+          else if (catagory === 'util') { utilEmbed.addField(title, dsc) }
+          else if (catagory === 'reddit') { redditEmbed.addField(title, dsc) }
+          else if (catagory === 'owner') { ownerEmbed.addField(title, dsc) }
+          else if (catagory === 'bot') { mainEmbed.addField(title, dsc) }
+          else { mainEmbed.addField(title, dsc) }
         });
 
         const m = await message.channel.send(mainEmbed);

@@ -3,13 +3,29 @@ const mpmsg = `!!ERROR!!\nYou dont have the required perms!`
 const request = require("request");
 const sub = "catpics"
 
+// levels
+const level = 1 // 0 Disabled | 1 Enabled | 2 Testing | 3 Debug | 4 Developer Only
+const status = {
+  0: "Disabled",
+  1: "Enabled",
+  2: "Testing",
+  3: "Debug",
+  4: "Developer Only",
+}
+
 module.exports = {
+  status,
+  level,
     catagory: 'reddit',
   name: 'catpic',
   desc: 'Get a random post from r/catpics',
   aliases: ['cat', 'pussy', 'kitty'],
     execute: async (log, message, args, client, db, packageInfo, Discord, member) => {
-
+ // levels
+ if (level == 0) return message.reply(`This command is Disabled! ${status}`);
+ if (level == 4 && !bowner.includes(message.author.id)) return message.reply("This command is Developer only!");
+ if (level == 3 && !bowner.includes(message.author.id)) return message.reply("This command is in debug mode!");
+ if (level == 2 && !bowner.includes(message.author.id)) return message.reply("This command is being tested!");
       // start
 const embed = new Discord.MessageEmbed();
       

@@ -15,12 +15,28 @@ const bot = {
 
 
 
+// levels
+const level = 1 // 0 Disabled | 1 Enabled | 2 Testing | 3 Debug | 4 Developer Only
+const status = {
+  0: "Disabled",
+  1: "Enabled",
+  2: "Testing",
+  3: "Debug",
+  4: "Developer Only",
+}
+
 module.exports = {
+  status,
+  level,
   catagory: 'util',
   name: 'whois',
   desc: 'Get Info About A Account',
   execute: async (log, message, args, client, db, packageInfo, Discord, member, badge) => {
-
+// levels
+ if (level == 0) return message.reply(`This command is Disabled! ${status}`);
+ if (level == 4 && !bowner.includes(message.author.id)) return message.reply("This command is Developer only!");
+ if (level == 3 && !bowner.includes(message.author.id)) return message.reply("This command is in debug mode!");
+ if (level == 2 && !bowner.includes(message.author.id)) return message.reply("This command is being tested!");
 
     let user = message.mentions.users.first();
     let muser = message.guild.member(message.mentions.users.first());

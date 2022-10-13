@@ -62,6 +62,5 @@ client.on('message', message => {
 
 
 client.login(process.env.PM2BOT_TOKEN)
-client
-    // .on("debug", log.debug)
-    .on("warn", log.warn)
+
+

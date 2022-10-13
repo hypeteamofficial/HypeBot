@@ -6,8 +6,6 @@ const request = require("request");
 
 const child_process = require('child_process');
 
-
-
 // levels
 const level = 4 // 0 Disabled | 1 Enabled | 2 Testing | 3 Debug | 4 Developer Only
 const status = {
@@ -18,20 +16,23 @@ const status = {
   4: "Developer Only",
 }
 
+
+
 module.exports = {
+  catagory: 'owner',
+  name: 'async',
+  desc: 'eval',
   status,
   level,
-  catagory: 'owner',
-  name: 'eval',
-  desc: 'eval',
-  aliases: ['aliases'],
+  aliases: ['aeval'],
   execute: async (log, message, args, client, db, packageInfo, Discord, member, scratchBOT, Scratch) => {
+
 // levels
  if (level == 0) return message.reply(`This command is Disabled! ${status}`);
  if (level == 4 && !bowner.includes(message.author.id)) return message.reply("This command is Developer only!");
  if (level == 3 && !bowner.includes(message.author.id)) return message.reply("This command is in debug mode!");
  if (level == 2 && !bowner.includes(message.author.id)) return message.reply("This command is being tested!");
-    if (!bowner.includes(message.author.id)) return message.reply(mpmsg);
+    
     const clean = text => {
       if (typeof (text) === "string")
         return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
@@ -40,7 +41,8 @@ module.exports = {
     }
     try {
       const code = args.join(" ");
-      let evaled = eval(code);
+      
+      let evaled = eval("(async () => {" + code + "})()");
       if (typeof evaled !== "string")
         evaled = require("util").inspect(evaled);
       

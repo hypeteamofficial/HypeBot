@@ -1,12 +1,29 @@
 const customisation = require('../customisation.json');
 var ids = '531186390717825074';
 const reactor = require("d-reactor");
+// levels
+const level = 1 // 0 Disabled | 1 Enabled | 2 Testing | 3 Debug | 4 Developer Only
+const status = {
+  0: "Disabled",
+  1: "Enabled",
+  2: "Testing",
+  3: "Debug",
+  4: "Developer Only",
+}
+
 module.exports = {
+  status,
+  level,
   catagory: 'bot',
   name: 'suggest',
   desc: 'Suggests something to **HYPE DEVELOPMENT**!',
   usage: 'suggest <suggestion>',
   execute: async (log, message, args, client, db, packageInfo, Discord) => {
+// levels
+ if (level == 0) return message.reply(`This command is Disabled! ${status}`);
+ if (level == 4 && !bowner.includes(message.author.id)) return message.reply("This command is Developer only!");
+ if (level == 3 && !bowner.includes(message.author.id)) return message.reply("This command is in debug mode!");
+ if (level == 2 && !bowner.includes(message.author.id)) return message.reply("This command is being tested!");
    if (!args[0]) return message.reply('You need to imput a Suggestion BOI');;
     if (args[0] === "bug") return message.reply("Please give a suggestion.");
     args = args.join(" ");
