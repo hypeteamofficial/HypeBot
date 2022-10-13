@@ -61,57 +61,22 @@ server.listen(2009);
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
-async function webload() {
-  text = await db.get(`currentStatus`);
-  io.emit('change_text', {
-    text: text
-  });
-}
-io.on('connection', (socket) => {
-  webload()
-  log.server('a user connected to web');
-});
 
 
-async function webplaying(msg) {
-  const text = `playing <b>${msg}</b>`
-  io.emit('change_text', {
-    text: text
-  });
-  await db.set(`currentStatus`, text)
-};
-async function webwatching(msg) {
-  const text = `Watching <b>${msg}</b>`
-  io.emit('change_text', {
-    text: text
-  });
-  await db.set(`currentStatus`, text)
-};
-async function weblistening(msg) {
-  const text = `Listening to <b>${msg}</b>`
-  io.emit('change_text', {
-    text: text
-  });
-  await db.set(`currentStatus`, text)
-};
+
 
 async function statusroll() {
   const customstatus = await db.get(`cst`);
 
   await client.user.setActivity(customstatus, { type: 'PLAYING' });
-  await webplaying(`${customstatus}`)
   await sleep(30000)
   await client.user.setActivity(`${client.guilds.cache.size} Servers!`, { type: 'WATCHING' });
-  await webwatching(`${client.guilds.cache.size} Servers!`)
   await sleep(30000)
   await client.user.setActivity(`${client.channels.cache.size} channels!`, { type: 'LISTENING' });
-  await weblistening(`${client.channels.cache.size} channels!`)
   await sleep(30000)
   await client.user.setActivity(`${prefix}help`, { type: 'LISTENING' });
-  await weblistening(`${prefix}help`)
   await sleep(30000)
   await client.user.setActivity(`Version ${ver}`, { type: 'PLAYING' });
-  await webplaying(`Version ${ver}`)
   await sleep(30000)
 }
 
