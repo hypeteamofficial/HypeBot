@@ -56,7 +56,7 @@ function sleep(ms) {
 
 
 
-server.listen(80);
+server.listen();
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
