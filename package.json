@@ -2,9 +2,9 @@
   "name": "Hype-Bot",
   "version": "1.0.0",
   "description": "",
-    "engines": {
-    "node": "18.x"
-  }
+   "engines": {
+     "node": "18.x"
+  },
   "scripts": {
     "start": "pm2-runtime start ecosystem.config.js --env production"
   },
